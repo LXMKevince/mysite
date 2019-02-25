@@ -2,4 +2,4 @@
 
 ### 1. 简单构建
 
-​	![网站功能模块](C:\Users\ADMINI~1\AppData\Local\Temp\1551099271754.png)
+​	![网站功能模块](C:\Users\ADMINI~1\AppData\Local\Temp\1551103346489.png)
