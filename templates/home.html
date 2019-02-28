@@ -1,21 +1,16 @@
-
 {% extends 'base.html' %}
 
+{% load staticfiles %}
 {# 页面标题 #}
 {% block title %}
     我的网站|首页
 {% endblock %}
 
+{% block header_extends %}
+<link rel="stylesheet" href="{% static 'home/css/home.css' %}">
+{% endblock %}
+
 {# 页面内容 #}
 {% block content %}
     <h3 class="home-content">欢迎访问我的网站！</h3>
-    <style>
-        h3.home-content{
-            font-size: 222%;
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%,-50%);
-        }
-    </style>
 {% endblock %}
