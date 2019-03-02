@@ -130,3 +130,6 @@ STATICFILES_DIRS = [
 # 设置文件上传路径，图片上传、文件上传都会存放在此目录里
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# 自定义分页参数
+EACH_PAGE_BLOGS_NUMBER = 5

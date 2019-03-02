@@ -15,11 +15,11 @@ class Blog(models.Model):
     blog_type = models.ForeignKey(
         BlogType, on_delete=models.DO_NOTHING)
     # content = models.TextField()
-    body = UEditorField('content', width=800, height=500,
-                        toolbars="full", imagePath="upimg/", filePath="upfile/",
-                        upload_settings={"imageMaxSize": 1204000},
-                        settings={}, command=None, blank=True
-                        )
+    content = UEditorField(width=800, height=500,
+                           toolbars="full", imagePath="upimg/", filePath="upfile/",
+                           upload_settings={"imageMaxSize": 1204000},
+                           settings={}, command=None, blank=True
+                           )
 
     author = models.ForeignKey(User, on_delete=models.DO_NOTHING)
     created_time = models.DateTimeField(auto_now_add=True)
@@ -27,3 +27,8 @@ class Blog(models.Model):
 
     def __str__(self):
         return "<Blog: %s>" % self.title
+
+    # 设置信息
+    class Meta:
+        # 排序
+        ordering = ['-created_time']
