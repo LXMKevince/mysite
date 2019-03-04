@@ -1,6 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import User
+# from django.contrib.contenttypes.models import ContentType
+# from django.core.exceptions import ObjectDoesNotExist
+# from read_statistics.models import ReadNum
 from DjangoUeditor.models import UEditorField  # 头部增加这行代码导入UEditorField
+from read_statistics.models import ReadNumExpandMthod
 
 
 class BlogType(models.Model):
@@ -10,7 +14,7 @@ class BlogType(models.Model):
         return self.type_name
 
 
-class Blog(models.Model):
+class Blog(models.Model, ReadNumExpandMthod):
     title = models.CharField(max_length=50)
     blog_type = models.ForeignKey(
         BlogType, on_delete=models.DO_NOTHING)
@@ -20,8 +24,8 @@ class Blog(models.Model):
                            upload_settings={"imageMaxSize": 1204000},
                            settings={}, command=None, blank=True
                            )
-
     author = models.ForeignKey(User, on_delete=models.DO_NOTHING)
+    readed_num = models.IntegerField(default=0)
     created_time = models.DateTimeField(auto_now_add=True)
     last_updated_time = models.DateTimeField(auto_now=True)
 

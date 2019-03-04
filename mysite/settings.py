@@ -37,8 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'blog',
     'DjangoUeditor',  # 注册APP应用
+    'blog',
+    'read_statistics',
 ]
 
 MIDDLEWARE = [
