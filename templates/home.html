@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% load staticfiles %}
+
 {# 页面标题 #}
 {% block title %}
     我的网站|首页
@@ -15,4 +16,83 @@
 {# 页面内容 #}
 {% block content %}
     <h3 class="home-content">欢迎访问我的网站！随便看看吧!</h3>
+    <!-- <p>{{ read_nums }}</p> -->
+    <!-- 图标容器demo -->
+    <script src="http://cdn.hcharts.cn/highcharts/highcharts.js"></script>
+    <div id="container"></div>
+    <!--  今天24小时内容的热门博客 -->
+    <h3>今天热门博客</h3>
+    <ul>
+        {% for hot_data in today_hot_data %}
+            <li>
+                <a href="{% url 'blog_detail' hot_data.content_object.pk %}">
+                    {{ hot_data.content_object.title }}({{ hot_data.read_num }})
+                </a>
+        </li>
+
+        {% empty %}
+            <li>今天暂时没有热门博客</li>
+        {%  endfor %}
+    </ul>
+    <h3>昨天热门博客</h3>
+    <ul>
+        {% for hot_data in yesterday_hot_data %}
+            <li>
+                <a href="{% url 'blog_detail' hot_data.content_object.pk %}">
+                    {{ hot_data.content_object.title }}({{ hot_data.read_num }})
+                </a>
+        </li>
+
+        {% empty %}
+            <li>昨天暂时没有热门博客</li>
+        {%  endfor %}
+    </ul>
+    <h3>7天热门博客</h3>
+    <ul>
+        {% for hot_data in hot_data_7_days %}
+            <li>
+                <a href="{% url 'blog_detail' hot_data.object_id %}">
+                    sss({{ hot_data.read_num_sum }})
+                </a>
+        </li>
+
+        {% empty %}
+            <li>昨天暂时没有热门博客</li>
+        {%  endfor %}
+    </ul>
+    
+    <script>
+        // 图表配置
+        var options = {
+            chart: { type: 'line' }, //指定图表的类型，默认是折线图（line）
+            title: { text: null }, // 标题
+            xAxis: { 
+                categories: {{ dates|safe }},  // x 轴分类
+                tickmarkPlacement: 'on',
+                title: { text: '前七日阅读量变化折线图' }
+            },
+
+            yAxis: {
+                title: { text: null }, // y 轴标题
+                labels:{ enabled: false }, // 侧边栏不显示
+                gridLineDashStyle: 'Dash',          // 虚线
+            },
+
+            series: [{                              // 数据列
+                name: '阅读量',                        // 数据列名
+                data:  {{ read_nums|safe }}   //                     // 数据
+            }],
+            plotOptions: {
+                line: {
+                    dateLabels: {
+                        enabled: true
+                    }
+                }
+            },
+            legend: { enabled: false },              // 图例不显示
+            credits: { enabled: false },             // 版权信息不显示
+        };
+        // 图表初始化函数
+        var chart = Highcharts.chart('container', options);
+    </script>
 {% endblock %}

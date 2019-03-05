@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.contrib.contenttypes.fields import GenericRelation
 # from django.contrib.contenttypes.models import ContentType
 # from django.core.exceptions import ObjectDoesNotExist
 # from read_statistics.models import ReadNum
@@ -28,6 +29,7 @@ class Blog(models.Model, ReadNumExpandMthod):
     readed_num = models.IntegerField(default=0)
     created_time = models.DateTimeField(auto_now_add=True)
     last_updated_time = models.DateTimeField(auto_now=True)
+    read_details = GenericRelation(ReadDetail)
 
     def __str__(self):
         return "<Blog: %s>" % self.title
