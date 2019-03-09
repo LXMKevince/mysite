@@ -48,3 +48,7 @@ dir(paginator)
 ### 4.django过滤filter
 
 ![1551533822532](C:\Users\ADMINI~1\AppData\Local\Temp\1551533822532.png)
+
+### 5.评论的实现方式
+
+![1551865941670](C:\Users\ADMINI~1\AppData\Local\Temp\1551865941670.png)

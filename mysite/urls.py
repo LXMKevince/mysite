@@ -26,7 +26,10 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('admin/', admin.site.urls),
     path('blog/', include('blog.urls')),
+    path('comment/', include('comment.urls')),
     path('ueditor/', include('DjangoUeditor.urls')),  # 添加DjangoUeditor的URL
     re_path('^media/(?P<path>.*)$', serve,
             {'document_root': settings.MEDIA_ROOT}),  # 增加此行
+    path('login/', views.login, name='login'),
+    path('register/', views.register, name='register'),
 ]

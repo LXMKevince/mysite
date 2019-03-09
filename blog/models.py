@@ -5,7 +5,7 @@ from django.contrib.contenttypes.fields import GenericRelation
 # from django.core.exceptions import ObjectDoesNotExist
 # from read_statistics.models import ReadNum
 from DjangoUeditor.models import UEditorField  # 头部增加这行代码导入UEditorField
-from read_statistics.models import ReadNumExpandMthod
+from read_statistics.models import ReadNumExpandMthod, ReadDetail
 
 
 class BlogType(models.Model):

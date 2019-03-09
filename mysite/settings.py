@@ -38,8 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'DjangoUeditor',  # 注册APP应用
+    'ckeditor',       # 将 django-ckeditor 注册到该列表中
     'blog',
     'read_statistics',
+    'comment',
 ]
 
 MIDDLEWARE = [
@@ -134,3 +136,11 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # 自定义分页参数
 EACH_PAGE_BLOGS_NUMBER = 5
+
+# 服务器缓存设置
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+        'LOCATION': 'my_cache_table',
+    }
+}
