@@ -2,12 +2,12 @@ from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator
 from django.conf import settings
 from django.db.models import Count
-from django.contrib.contenttypes.models import ContentType
+# from django.contrib.contenttypes.models import ContentType
 
 from .models import Blog, BlogType
 from read_statistics.utils import read_statistics_once_read
-from comment.models import Comment
-from comment.forms import CommentForm
+# from comment.models import Comment
+# from comment.forms import CommentForm
 
 
 # 获取博客列表共同数据，分页
@@ -77,18 +77,19 @@ def blog_list(request):
 def blog_detail(request, blog_pk):
     blog = get_object_or_404(Blog, pk=blog_pk)
     read_cookie_key = read_statistics_once_read(request, blog)
-    blog_content_type = ContentType.objects.get_for_model(blog)
-    comments = Comment.objects.filter(
-        content_type=blog_content_type, object_id=blog.pk)
+    # blog_content_type = ContentType.objects.get_for_model(blog)
+    # comments = Comment.objects.filter(
+    #    content_type=blog_content_type, object_id=blog.pk, parent=None)
 
     context = {}
     context['blog'] = blog
     context['user'] = request.user
-    context['comments'] = comments
-    data = {}
-    data['content_type'] = blog_content_type.model
-    data['object_id'] = blog_pk
-    context['comment_form'] = CommentForm(initial=data)
+    # context['comments'] = comments.order_by('-comment_time')
+    # data = {}
+    # data['content_type'] = blog_content_type.model
+    # data['object_id'] = blog_pk
+    # data['reply_comment_id'] = 0
+    # context['comment_form'] = CommentForm(initial=data)
 
     # 上一条博客
     context['previous_blog'] = Blog.objects.filter(
