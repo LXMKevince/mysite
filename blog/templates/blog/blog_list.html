@@ -3,6 +3,7 @@
 {% load staticfiles %}
 
 {% load comment_tags %}
+{% load likes_tags %}
 {# 页面标题 #}
 {% block title %}我的网站{% endblock %}
 
@@ -40,6 +41,8 @@
                                 <span>阅读:({{ blog.get_read_num }})</span>
                                  &nbsp; &nbsp;
                                 <span>评论:({% get_comment_count blog %})</span>
+                                 &nbsp; &nbsp;
+                                <span>点赞:({% get_like_count blog %})</span>
                             </p>
                             <p class="blog-content">{{ blog.content|truncatechars:120|safe }}</p>
                         </div>

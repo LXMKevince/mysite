@@ -25,6 +25,7 @@ ul.blog-info-description li{
 }
 div.blog-content{
     text-indent: 2em;
+    margin-bottom: 2em;
 }
 
 div.PageNavigation {
@@ -78,4 +79,15 @@ div#reply-content-container{
 div#reply-content-container>p{
     border-bottom: 1px dashed #ccc;
     padding-bottom: 0.5em;
+}
+
+div.like{
+    color: #337ab7;
+    cursor: pointer;
+    display: inline-block;
+    padding: 1.5em 1.3em;
+}
+
+div.like .active{
+    color: #f22;
 }

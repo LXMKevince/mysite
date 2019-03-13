@@ -6,6 +6,8 @@
 
 {% load staticfiles %}
 {% load comment_tags %}
+{% load likes_tags %}
+
 {% block header_extends %}
     <link rel="stylesheet" href="{% static 'blog/blog.css' %}">
     <script type='text/javascript' src="{% static 'ckeditor/ckeditor-init.js' %}"></script>
@@ -28,6 +30,11 @@
                     <li>评论({% get_comment_count blog %})</li>
                 </ul>
                 <div class="blog-content">{{ blog.content|safe }}</div>
+                <div class="like" onclick="likeChange(this, 'blog', {{ blog.pk }})">
+                    <span class="glyphicon glyphicon-thumbs-up {% get_like_status blog %}"></span>
+                    <span class="liked-num">{% get_like_count blog %}</span>
+                    <span>喜欢</span>
+                </div>
                 <div class="blog-more">
                     <p>上一篇：
                         {% if previous_blog %}
@@ -117,21 +124,21 @@
             $('html').animate({scrollTop: $('#comment-form').offset().top - 60}, 300, function(){
                 CKEDITOR.instances['id_text'].focus();
             });
-        }
+        };
         function numFormat(num){
             return ('00' + num).substr(-2);
-        }
+        };
         function timeFormat(timestamp){
-            var datetime = new Date( timestamp*1000 );
+            // console.log(typeof(timestamp));
+            var datetime = new Date( timestamp );
             var year = datetime.getFullYear();
             var month = numFormat(datetime.getMonth());
             var day = numFormat(datetime.getDate());
-            var hour = numFormat(datetime.getHours()+1);
+            var hour = numFormat(datetime.getHours()+8);
             var minute = numFormat(datetime.getMinutes());
             var second = numFormat(datetime.getSeconds());
             return year + '-' + month + '-' + day + ' ' + hour + ':' + minute + ':' + second;
-        }
-
+        };
         $("#comment-form").submit(function(){
             // 判断是否为空
             $('#comment-error').text('');
@@ -148,7 +155,7 @@
                 data: $(this).serialize(),
                 cache: false,
                 success: function(data){
-                    console.log(data);
+                    // console.log(data);
                     if(data['status'] == 'SUCCESS'){
                         if($('#reply_comment_id').val()=='0'){
                             // 插入评论
@@ -176,5 +183,41 @@
             });
             return false; 
         });
+        function likeChange(obj, content_type, object_id){
+            var is_like = obj.getElementsByClassName('active').length == 0;
+            console.log(is_like);
+            $.ajax({
+                url: "{% url 'like_change' %}",
+                type: 'GET',
+                data: {
+                    content_type: content_type,
+                    object_id: object_id,
+                    is_like: is_like
+                },
+                cache: false,
+                success: function(data){
+                    console.log(data);
+                    if(data['status'] == 'SUCCESS'){
+                        // 更新点赞状态
+                        var ele = $(obj.getElementsByClassName('glyphicon'));
+                        if(is_like){
+                            ele.addClass('active');
+                        }else{
+                            ele.removeClass('active');
+                        }
+                        // 更新点赞数量
+                        //console.log(data['liked_num']);
+                        $('.liked-num').text(data['liked_num']);
+                    }
+                    else{
+                        alert(data['message']);
+                    }
+                },
+                error: function(xhr){
+                    console.log(xhr);
+                },
+            });
+            return false;
+        }
     </script>
 {% endblock %}

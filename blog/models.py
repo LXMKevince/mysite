@@ -18,14 +18,14 @@ class BlogType(models.Model):
 class Blog(models.Model, ReadNumExpandMthod):
     title = models.CharField(max_length=50)
     blog_type = models.ForeignKey(
-        BlogType, on_delete=models.DO_NOTHING)
+        BlogType, on_delete=models.CASCADE)
     # content = models.TextField()
     content = UEditorField(width=800, height=500,
                            toolbars="full", imagePath="upimg/", filePath="upfile/",
                            upload_settings={"imageMaxSize": 1204000},
                            settings={}, command=None, blank=True
                            )
-    author = models.ForeignKey(User, on_delete=models.DO_NOTHING)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
     readed_num = models.IntegerField(default=0)
     created_time = models.DateTimeField(auto_now_add=True)
     last_updated_time = models.DateTimeField(auto_now=True)
